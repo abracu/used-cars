@@ -52,9 +52,11 @@ contract UsedCars {
     event End(uint256 when);
 
     constructor() payable {
-        require((2 * price) == msg.value, "El valor tiene que ser uniforme.");
-        seller = payable(msg.sender);
         price = msg.value / 2;
+        require((2 * price) == msg.value, "Value must be even.");
+
+        seller = payable(msg.sender);
+        state = State.Sale;
     }
 
     function close() public onlySeller inState(State.Sale) {
@@ -80,12 +82,11 @@ contract UsedCars {
     function confirmReceived() public onlyBuyer inState(State.Locked) {
         state = State.Release;
 
-        buyer.transfer(price); // El comprador recibe 1 x valor aquí
+        buyer.transfer(price); // Buyer receives 1 x price here
         emit ConfirmReceived(block.timestamp, buyer);
     }
 
     function refundBuyer() public onlySeller inState(State.Locked) {
-        // Da la opción al vendedor de reembolsar al comprador antes de enviar un producto (automóvil) aquí
         state = State.Sale;
         buyer = payable(0);
 
@@ -100,11 +101,7 @@ contract UsedCars {
         emit SellerRefunded(block.timestamp);
     }
 
-    function restartContract()
-        public
-        payable
-        onlySeller
-    {
+    function restartContract() public payable onlySeller {
         if (state == State.Closed || state == State.Complete) {
             require(
                 (2 * price) == msg.value,
@@ -112,11 +109,7 @@ contract UsedCars {
             );
 
             state = State.Sale;
-
-            // Reset buyer to allow the same buyer again.
             buyer = payable(0);
-            // This doesn't work.
-            // buyer = address(0);
 
             emit Restarted(block.timestamp);
         }
@@ -126,7 +119,6 @@ contract UsedCars {
         return previousBuyers;
     }
 
-    // totalPreviousBuyers
     function totalSales() public view returns (uint count) {
         return previousBuyers.length;
     }
