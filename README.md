@@ -2,8 +2,7 @@
 El contrato actúa como intermediario en una transacción de compra-venta entre un comprador y un vendedor, donde el comprador envía el pago al contrato y el vendedor envía el producto al comprador.
 
 J
-Jjj
-
+Jj
 
 El contrato tiene varias etapas, incluyendo venta, bloqueo, liberación, cierre y completo. El precio del producto se divide en dos partes iguales, y el contrato mantiene una lista de los compradores anteriores.
 
