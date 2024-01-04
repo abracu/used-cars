@@ -6,7 +6,6 @@ W
 E
 E
 E
-
 E
 
 contract UsedCars {
