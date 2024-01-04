@@ -6,7 +6,7 @@ W
 E
 E
 E
-E
+
 
 contract UsedCars {
     uint public price;
