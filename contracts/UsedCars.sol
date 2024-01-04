@@ -4,7 +4,7 @@ pragma solidity >=0.7.0 <0.9.0;
 W
 W
 E
-E
+
 E
 
 contract UsedCars {
